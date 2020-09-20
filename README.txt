@@ -11,7 +11,7 @@ pip install requirements.txt
 ########################################################
 List of files:
 
-credidtcard.csv    :     dataset for training
+undersample_data.csv    :     dataset for training
 data.py            :     process dataset, cleaning, and normalization
 KNN.py             :     KNN model training
 decision_tree.py   :     DT model training
