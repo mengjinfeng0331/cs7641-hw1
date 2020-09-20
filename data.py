@@ -3,7 +3,6 @@ from sklearn.model_selection import train_test_split # Import train_test_split f
 import seaborn as sns
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import StandardScaler
-from sklearn.utils import class_weight
 import numpy as np
 import warnings
 from sklearn.exceptions import DataConversionWarning
@@ -14,16 +13,9 @@ warnings.filterwarnings(action='ignore', category=DataConversionWarning)
 
 np.random.seed(0)
 
-FILE= 'creditcard.csv'
-df = pd.read_csv(FILE)
-label_column = 'Class'
-y = df[label_column]
-X = df.drop(label_column, axis=1)
-    
-class_weight = class_weight.compute_class_weight('balanced',
-                                                np.unique(y),
-                                                y)
-def undersample(ret = ''):
+FILE= 'undersample_data.csv'
+
+def process_rawdata(file):
     df = pd.read_csv(FILE)
     
     df = normallize(df)
@@ -50,6 +42,12 @@ def undersample(ret = ''):
     y_undersample = under_sample_df.ix[:, under_sample_df.columns == 'Class']
 #    X_train, X_test, y_train, y_test = train_test_split(X_undersample, y_undersample, test_size=0.3, random_state=1) # 70% training and 30% test
     
+    return X_undersample,y_undersample    
+
+def undersample():
+    df = pd.read_csv(FILE)
+    X_undersample = df.ix[:, df.columns != 'Class']
+    y_undersample = df.ix[:, df.columns == 'Class']    
     return X_undersample,y_undersample
 
 def normallize(df):
@@ -85,5 +83,4 @@ def plot_fraud_hist(df):
 
 
 #plot_fraud_hist(df)
-
 
